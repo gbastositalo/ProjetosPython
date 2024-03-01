@@ -1,0 +1,67 @@
+def mostrarCardapio():  # Função que mostra uma interface para o usuário
+    print("|                 CARDÁPIO                    |")
+    print("| Código |       Descrição        |   Preço   |")
+    print("|  100   |    Cachorro-quente     |  R$ 9,00  |")
+    print("|  101   | Cachorro-quente duplo  |  R$ 11,00 |")
+    print("|  102   |         X-egg          |  R$ 12,00 |")
+    print("|  103   |        X-salada        |  R$ 13,00 |")
+    print("|  104   |        X-bacon         |  R$ 14,00 |")
+    print("|  105   |         X-tudo         |  R$ 17,00 |")
+    print("|  200   |   Refrigerante lata    |  R$ 5,00  |")
+    print("|  201   |       Chá gelado       |  R$ 4,00  |")
+def calcularTotal():
+    global total
+    while True:  # Loop infinito para validar o código de entrada
+        try:  # try/except para tratar dados não inteiros
+            # Recebe o código do produto
+            cod = int(input("\nDigite o código do lanche desejado ou digite 000 para sair: "))
+        except ValueError:
+            print("\nSomente números inteiros!")
+            continue
+        if(cod == 100):
+            print("\nVocê pediu um cachorro-quente no valor de R$ 9,00.")
+            total += 9  # Variável acumuladora
+        elif(cod == 101):
+            print("\nVocê pediu um cachorro-quente duplo no valor de R$ 11,00.")
+            total += 11  # Variável acumuladora
+        elif(cod == 102):
+            print("\nVocê pediu um X-egg no valor de R$ 12,00.")
+            total += 12  # Variável acumuladora
+        elif(cod == 103):
+            print("\nVocê pediu um X-salada no valor de R$ 13,00.")
+            total += 13  # Variável acumuladora
+        elif(cod == 104):
+            print("\nVocê pediu um X-bacon no valor de R$ 14,00.")
+            total += 14  # Variável acumuladora
+        elif(cod == 105):
+            print("\nVocê pediu um X-tudo no valor de R$ 17,00.")
+            total += 17  # Variável acumuladora
+        elif(cod == 200):
+            print("\nVocê pediu um refrigerante em lata no valor de R$ 5,00.")
+            total += 5  # Variável acumuladora
+        elif(cod == 201):
+            print("\nVocê pediu um chá gelado no valor de R$ 4,00.")
+            total += 4  # Variável acumuladora
+        elif(cod == 000):  # Verifica a opção "sair".
+            print("\nVocê escolheu sair.")
+            break
+        else:  # Para o caso de não ser digitado um dos códigos especificados
+            print("\nCódigo inválido.")
+            continue
+        while True:
+            novoPedido = input("Deseja pedir mais alguma coisa?\nDigite 'sim' ou 'não': ")  #Verifica mais uma compra
+            if(novoPedido.lower() == "sim"):
+                calcularTotal()
+            elif(novoPedido.lower() == "não" or novoPedido.lower() == "nao"):
+                break  # Quebra o laço de repetição
+            else:
+                print("\nDado incorreto. Tente novamente.");
+                continue
+            break
+        break
+# Programa Main
+print("Bem-vindo(a) à Lanchonete de Ítalo Bastos!\n")
+mostrarCardapio()
+total = 0  # Variável de controle para armazenar o total do pedido
+calcularTotal()
+print("\nPerfeito! O total a pagar pela sua compra é R$ {:.2f}".format(total))
