@@ -1,0 +1,26 @@
+def calcularDesconto():
+    print("---- MÓDULO DE CALCULAR DESCONTOS ----\n")
+    preco = float(input("Qual é o valor unitário do produto (em R$)?\n"))  # Recebe o valor unitário do produto
+    qtd = int(input("Qual é a quantidade desse produto?\n"))  # Recebe a quantidade do mesmo produto
+
+    if(qtd <= 9):
+        desconto = "0%"
+        desc = 0  # Multiplicador para o caso de não haver desconto
+    elif(9 < qtd <= 99):
+        desconto = "5%"
+        desc = 0.05  # Multiplicador para o caso de desconto de 5%
+    elif(99 < qtd <= 999):
+        desconto = "10%"
+        desc = 0.1  # Multiplicador para o caso de desconto de 10%
+    else:
+        desconto = "15%"
+        desc = 0.15  # Multiplicador para o caso de desconto de 15%
+
+    total = preco * qtd   # Recebe o valor total sem o desconto
+    totalDesc = total - preco * desc * qtd   # Recebe o valor total após o desconto
+    print("\nSeu desconto é de {}!".format(desconto))
+    print("O total sem desconto da sua compra foi R$ {:.2f}.".format(total))
+    print("O total da sua compra após o desconto é R$ {:.2f}.".format(totalDesc))
+# Programa Main
+print("Bem-vindo(a) à Loja de Ítalo Galante C Bastos!")
+calcularDesconto()
