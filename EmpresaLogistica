@@ -1,0 +1,76 @@
+def calcularPrecoInicial():  # Função para retornar o preço inicial da entrega
+    while True:  # Loop infinito para validar os dados
+        try:  # try/except para verificar valor não numérico
+            a = float(input("Digite o comprimento do objeto (em cm): "))
+            b = float(input("Digite a largura do objeto (em cm): "))
+            c = float(input("Digite a altura do objeto (em cm): "))
+        except ValueError:
+            print("Você digitou um valor não numérico. Tente novamente.")
+            continue  # Retorna para o início do laço
+        volume = a * b * c  # Variável para armazenar o preço inicial da entrega
+        if(volume < 1000):  # Condicionais de múltipla escolha para verificar o preço
+            preco = 10
+        elif(1000 <= volume < 10000):
+            preco = 20
+        elif(10000 <= volume < 30000):
+            preco = 30
+        elif(30000 <= volume < 100000):
+            preco = 50
+        else:  # Para o caso de volume maior ou igual a 100000 cm³
+            print("O volume da sua encomenda é {} cm³".format(volume))
+            print("Não aceitamos pacotes com dimensões tão grandes.")
+            print("Por favor, tente novamente.")
+            continue #Retorna ao início do laço
+        break #Quebra do loop
+    print("O volume da sua encomenda é {} cm³".format(volume))#Informe do volume
+    return preco #Retorna o preço inicial da entrega para o programa principal
+def calcularMultPeso(): #Função para retornar o mult. de peso
+    while True: #Loop infinito para validar os dados de peso
+        try: #Estrutura try/except para verificar valor não numérico
+            peso = float(input("Digite o peso do objeto (em Kg): "))
+        except ValueError:
+            print("Você digitou um valor não numérico. Tente novamente.")
+            continue
+        if peso < 0.1:
+            mult = 1
+        elif 0.1 <= peso < 1:
+            mult = 1.5
+        elif 1 <= peso < 10:
+            mult = 2
+        elif 10 <= peso < 30:
+            mult = 3
+        else: #Para o caso de peso maior ou igual a 30Kg
+            print("Não aceitamos pacotes tão pesados.")
+            print("Por favor, tente novamente.")
+            continue #Retorna ao início do laço
+        break
+    return mult  # Retorna o mult. de peso para o programa principal
+def calcularMultRota():  # Função para retornar o mult. de rota
+    print("\tSelecione a rota desejada:")#Interface para o usuário
+    print("RJSP - De Rio de Janeiro para São Paulo")
+    print("RJBR - De Rio de Janeiro para Brasília")
+    print("SPRJ - De São Paulo para Rio de Janeiro")
+    print("SPBR - De São Paulo para Brasília")
+    print("BRRJ - De Brasília para Rio de Janeiro")
+    print("BRSP - De Brasília para São Paulo")
+    while True:  # Loop infinito para validar os dados de rota
+        rota = input(">> ")  # Recebe a rota escolhida
+        if(rota.upper() == "RJSP" or rota.upper() == "SPRJ"):
+            mult = 1
+        elif(rota.upper() == "SPBR" or rota.upper() == "BRSP"):
+            mult = 1.2
+        elif(rota.upper() == "RJBR" or rota.upper() == "BRRJ"):
+            mult = 1.5
+        else:  # Para o caso de qualquer dado fora do especificado
+            print("Esta rota não existe.\nPor favor, tente novamente.")
+            continue  # Retorna ao início do laço
+        break
+    return mult  # Retorna o mult. de rota para o programa principal
+# Programa Main
+print("Bem-vindo(a) à Companhia de Logística de Ítalo Bastos!\n")
+preco = calcularPrecoInicial()  # Armazena o preço inicial da entrega
+multPeso = calcularMultPeso()  # Armazena o multiplicador de peso
+multRota = calcularMultRota()  # Armazena o multiplicador da rota
+total = preco * multPeso * multRota  # Calcula do total da entrega
+print("Dimensões = {} * Peso = {} * Rota = {}".format(preco, multPeso, multRota))
+print("O total a pagar é R$ {:.2f}.".format(total))
