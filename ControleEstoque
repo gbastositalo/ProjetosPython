@@ -1,0 +1,111 @@
+def cadastrarPeca(codigo):  # Função que cadastra uma Peça
+    global cadastro, peca  # Trazendo as variáveis globais para a função
+    while True:
+        try:
+            print("Você selecionou a opção Cadastrar uma Peça.")
+            print("Código da peça: {}".format(codigo))
+            peca["Código"] = codigo
+            peca["Nome"] = input("Qual é o nome da peça? ")
+            peca["Fabricante"] = input("Qual é o fabricante da peça? ")
+            peca["Preço"] = float(input("Qual é o preço (em R$) da peça? "))
+        except ValueError:
+            print("Dado inválido. Por favor, tente outra vez.")
+            continue
+        break
+    cadastro.append(peca.copy())
+def consultarPecas():  # Função que consulta Peças com diferentes opções
+    global cadastro, peca  # Trazendo as variáveis globais para a função
+    while True:
+        opcaoConsulta = input("Você selecionou a opção Consultar Peças.\n"
+                                "O que deseja fazer?\n"
+                                "1 - Consultar todas as peças\n"
+                                "2 - Consultar peças por código\n"
+                                "3 - Consultar peças por fabricante\n"
+                                "4 - Retornar\n"
+                                ">> ")
+        if(opcaoConsulta == "1"):  # Todas as Peças
+            for peca in cadastro:
+                print("-" * 20)
+                for key, value in peca.items():
+                    print("{}: {}".format(key, value))
+            print("-" * 20)
+        elif(opcaoConsulta == "2"):  # Consultar por código
+            print("Você selecionou Consultar Peças por Código.")
+            while True:
+                try:
+                    codigoPeca = int(input("Por favor, digite o código da peça: "))
+                except ValueError:
+                    print("Opção deve ser um número inteiro. Tente novamente.")
+                    continue
+                for peca in cadastro:
+                    if(peca["Código"] == codigoPeca):
+                    # Se a Peça no campo Código for igual ao valor digitado
+                        print("-" * 20)
+                        for key, value in peca.items():
+                            print("{}: {}".format(key, value))
+                    print("-" * 20)
+                break
+        elif(opcaoConsulta == "3"):  # Consultar por  fabricante
+            print("Você selecionou Consultar Peças por Fabricante.")
+            while True:
+                fabricantePeca = input("Por favor, informe o fabricante da peça: ")
+                for peca in cadastro:
+                    if(fabricantePeca not in peca["Fabricante"]):
+                        print("Esse nome não existe no cadastro. Por favor, tente novamente.")
+                        continue
+                    if(peca["Fabricante"] == fabricantePeca):
+                    # Se a Peça no campo Fabricante for igual ao nome digitado
+                        print("-" * 20)
+                        for key, value in peca.items():
+                            print("{}: {}".format(key, value))
+                    print("-" * 20)
+                break
+        elif(opcaoConsulta == "4"):
+            return  # Sai da função consultarPecas e volta para Main
+        else:  # Caso for digitado qualquer valor acima de 4 ou não numérico
+            print("Essa opção não existe. Por favor, tente novamente.")
+            continue
+        break
+def removerPeca():  # Função que remove uma Peça
+    global cadastro, peca  # Trazendo as variáveis globais para a função
+    print("Você selecionou a opção Remover uma Peça.")
+    while True:
+        codigoRemocao = int(input("Digite o código da peça a ser removida: "))
+        for peca in cadastro:
+            if(codigoRemocao != peca["Código"]):
+                print("Essa peça não existe no cadastro. Por favor, tente novamente.")
+                continue
+            if(peca["Código"] == codigoRemocao):
+                cadastro.remove(peca)
+        break
+# Programa Main
+print("Bem-vindo(a) ao Controle de Estoque de Bicicletaria de Ítalo Bastos!")
+cadastro = []
+peca = {"Código": "",
+        "Nome": "",
+        "Fabricante": "",
+        "Preço": ""}
+codigoPeca = 0
+while True:
+    opcaoMain = input("\nO que deseja fazer?\n"+
+                       "1 - Cadastrar uma peça\n"+
+                       "2 - Consultar uma peça\n"+
+                       "3 - Remover uma peça\n"+
+                       "4 - Sair\n"+
+                       ">> ")
+    if(opcaoMain == "1"):
+        codigoPeca += 1
+        cadastrarPeca(codigoPeca)
+        continue
+    elif(opcaoMain == "2"):
+        consultarPecas()
+        continue
+    elif(opcaoMain == "3"):
+        removerPeca()
+        continue
+    elif(opcaoMain == "4"):
+        print("\nPrograma encerrado.")
+        break
+    else:
+        print("Essa opção não existe. Por favor, tente novamente.")
+        continue
