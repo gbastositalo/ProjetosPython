@@ -24,9 +24,9 @@ def calcularPrecoInicial():  # Função para retornar o preço inicial da entreg
         break #Quebra do loop
     print("O volume da sua encomenda é {} cm³".format(volume))#Informe do volume
     return preco #Retorna o preço inicial da entrega para o programa principal
-def calcularMultPeso(): #Função para retornar o mult. de peso
-    while True: #Loop infinito para validar os dados de peso
-        try: #Estrutura try/except para verificar valor não numérico
+def calcularMultPeso(): # Função para retornar o multiplicador de peso
+    while True: # Loop infinito para validar os dados de peso
+        try: # Estrutura try/except para verificar valor não numérico
             peso = float(input("Digite o peso do objeto (em Kg): "))
         except ValueError:
             print("Você digitou um valor não numérico. Tente novamente.")
@@ -39,13 +39,13 @@ def calcularMultPeso(): #Função para retornar o mult. de peso
             mult = 2
         elif 10 <= peso < 30:
             mult = 3
-        else: #Para o caso de peso maior ou igual a 30Kg
+        else: # Para o caso de peso maior ou igual a 30Kg
             print("Não aceitamos pacotes tão pesados.")
             print("Por favor, tente novamente.")
-            continue #Retorna ao início do laço
+            continue # Retorna ao início do laço
         break
     return mult  # Retorna o mult. de peso para o programa principal
-def calcularMultRota():  # Função para retornar o mult. de rota
+def calcularMultRota():  # Função para retornar o multiplicador de rota
     print("\tSelecione a rota desejada:")#Interface para o usuário
     print("RJSP - De Rio de Janeiro para São Paulo")
     print("RJBR - De Rio de Janeiro para Brasília")
