@@ -31,13 +31,13 @@ def calcularMultPeso(): # Função para retornar o multiplicador de peso
         except ValueError:
             print("Você digitou um valor não numérico. Tente novamente.")
             continue
-        if peso < 0.1:
+        if(peso < 0.1):
             mult = 1
-        elif 0.1 <= peso < 1:
+        elif(0.1 <= peso < 1):
             mult = 1.5
-        elif 1 <= peso < 10:
+        elif(1 <= peso < 10):
             mult = 2
-        elif 10 <= peso < 30:
+        elif(10 <= peso < 30):
             mult = 3
         else: # Para o caso de peso maior ou igual a 30Kg
             print("Não aceitamos pacotes tão pesados.")
