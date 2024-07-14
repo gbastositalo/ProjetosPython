@@ -1,0 +1,90 @@
+# Classe que cria cada elemento, de cada lista encadeada,
+# com o ponteiro apontando para nulo por padrão
+class NodoEstado:
+    def __init__(self, sigla, nomeEstado):
+        self.sigla = sigla
+        self.nomeEstado = nomeEstado
+        self.proximo = None
+
+class ListaEncadeadaEstados:
+    def __init__(self):
+        self.head = None
+
+    def inserir(self, nodo):
+        # Inserção no início da lita encadeada; faz o ponteiro do nodo passado como parâmetro
+        # apontar para o head e, depois, o transforma no novo head
+        nodo.proximo = self.head
+        self.head = nodo
+        print("Estado inserido com sucesso.")
+
+    def imprimir(self):
+        if(self.head != None):
+            nodoAtual = self.head
+            strSaida = ""
+            while (nodoAtual.proximo != None):
+                strSaida = strSaida.__add__(nodoAtual.sigla)
+                strSaida = strSaida.__add__("-> ")
+                nodoAtual = nodoAtual.proximo
+            strSaida = strSaida.__add__("None")
+            return strSaida
+
+    # Implementar método de remoção
+
+class TabelaHash:
+    def __init__(self):
+        self.tamanho = 10
+        self.indicesListas = [ListaEncadeadaEstados() for i in range(0, self.tamanho)]
+
+    def funcaoHashSigla(self, key):
+        key = str(key)
+        # ord() faz a conversão de caracteres para
+        # inteiros com base na tabela ASCII
+        return (ord(key[0]) + ord(key[1])) % self.tamanho
+
+    def inserirNoIndice(self):
+        try:
+            string = input("\nDigite a sigla de um estado: ")
+            chaveSigla = string[0:2].upper()
+            nomeEstado = input("Digite o nome do estado: ")
+
+            # Instancia um novo elemento
+            nodoCriado = NodoEstado(chaveSigla, nomeEstado)
+
+            # Chama a função hash para obter a posição de inserção da chave
+            posicao = self.funcaoHashSigla(chaveSigla)
+            self.indicesListas[posicao].inserir(nodoCriado)
+        except IndexError:
+            print("\nEntrada inválida. São necessários 2 (dois) caracteres!")
+            self.inserirNoIndice()
+
+    def imprimirTabelaHash(self):
+        print("\nTabela de Emplacamento:")
+        for i in range(0, self.tamanho):
+            print("{}: ".format(i) + "{}".format(self.indicesListas[i].imprimir()))
+
+# Programa Main
+print("Bem-vindo(a) ao Controle de Emplacamento de Ítalo Bastos!")
+
+objTabelaHash = TabelaHash()
+
+while True: # loop infinito para apresentar as opções
+    opcaoMain = input("\nO que deseja fazer?" +
+                      "\n1 - Inserir na Tabela Hash" +
+                      "\n2 - Imprimir a Tabela Hash" +
+                      "\n3 - Remover da Tabela Hash" +
+                      "\n4 - Sair" +
+                      "\n>> ") # Interface para o usuário
+    if (opcaoMain == "1"):
+        objTabelaHash.inserirNoIndice()
+        continue
+    elif (opcaoMain == "2"):
+        objTabelaHash.imprimirTabelaHash()
+        continue
+    elif (opcaoMain == "3"):
+        # IMPLEMENTAR
+        continue
+    elif (opcaoMain == "4"):
+        print("\nPrograma encerrado.")
+        break
+    else:
+        print("\nEssa opção não existe. Por favor, atente-se às opções!")
