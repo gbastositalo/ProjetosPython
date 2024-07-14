@@ -1,0 +1,134 @@
+# Classe que cria cada elemento da listaEspera com
+# o ponteiro apontando para nulo por padrão
+class NodoCartao:
+    def __init__(self, cor, numero):
+        self.cor = cor
+        self.numero = numero
+        self.proximo = None
+    def __repr__(self):
+        dadosCartao = f"[{self.cor}, {self.numero}]"
+        return dadosCartao
+
+# Classe que cria a lista encadeada
+# com "head" inicializada como nulo
+class ListaEncadeadaEspera:
+    def __init__(self):
+        self.head = None
+
+    # Sem prioridade, o cartão é colocado no final da listaEspera
+    def inserirSemPrioridade(self, nodo):
+        # Itera pela listaEspera até o último elemento e insere no final
+        nodoAtual = self.head
+        while(nodoAtual.proximo != None):
+            nodoAtual = nodoAtual.proximo
+        nodoAtual.proximo = nodo
+        print("Paciente adicionado ao final da Fila com sucesso.")
+        return
+
+    def inserirComPrioridade(self, nodo):
+        nodoAtual = self.head
+        # Para o caso de não haverem cartões Amarelos na Lista,
+        if(nodoAtual.cor == "V"):
+            nodo.proximo = self.head # o NodoCartao é inserido no início
+            self.head = nodo
+            print("Paciente foi adicionado ao início da Fila.")
+            return
+        while(nodoAtual.cor == "A"):
+            if(nodoAtual.proximo.cor == "V"):
+                aux = nodoAtual # nodoAtual será o último nodo encontrado com cor Amarela
+            nodoAtual = nodoAtual.proximo
+            # nodoAtual será o primeiro nodo encontrado com cor Verde
+
+        # Insere o NodoCartao passado como parâmetro antes
+        nodo.proximo = nodoAtual # do primeiro nodo encontrado com cor Verde
+        aux.proximo = nodo
+        print("Paciente adicionado à Fila com prioridade.")
+
+    def inserir(self): # inserir é uma rotina para setar os valores
+        # e definir o nível de prioridade
+        try:
+            string = input("\nPor favor, informe a cor do cartão (\"A\" ou \"V\"): ")
+            # Pegando apenas o primeiro caractere e convertendo para maiúsculo
+            cor = string[0].upper()
+            if(cor not in "A" and cor not in "V"):
+                print("\nSomente os caracteres especificados são aceitos!")
+                self.inserir()
+            numero = int(input("Por favor, informe o número do cartão: "))
+        except ValueError:
+            print("O número do cartão deve ser um valor inteiro!")
+            self.inserir()
+
+        if(cor == "A" and numero < 201):
+            print("\nNúmero dos cartões Amarelos devem começar em 201!")
+            self.inserir()
+        if(cor == "V" and numero < 1 or cor == "V" and numero > 200):
+            print("\nNúmero dos cartões Verdes deve estar entre 1 e 200!")
+            self.inserir()
+
+        # Instancia o nodo para ser inserido na Lista encadeada
+        nodoCriado = NodoCartao(cor, numero)
+        # Verifica se a lista está vazia,
+        # em cujo caso o head aponta para o cartao criado
+        if (self.head == None):
+            self.head = nodoCriado
+            print("Paciente foi o primeiro a ser adicionado à Fila!")
+            return
+        # Se a cor for Verde, inserir sem prioridade
+        elif(nodoCriado.cor == "V"):
+            self.inserirSemPrioridade(nodoCriado)
+        # Se a cor dor Amarelo, inserir com prioridade
+        elif(nodoCriado.cor == "A"):
+            self.inserirComPrioridade(nodoCriado)
+
+    def imprimirListaEspera(self):
+        # Verifica se há algum paciente na fila
+        if (self.head != None):
+            nodoAtual = self.head
+            print("\nLista de espera: ")
+            while(nodoAtual.proximo != None):
+                print(nodoAtual, end=", ")
+                nodoAtual = nodoAtual.proximo
+            print(nodoAtual, end=", Vazio\n")
+        # Se não, uma mensagem é apresentada ao usuário
+        else:
+            print("\nA Fila de espera está vazia!")
+
+    def atenderPaciente(self):
+        # Se a lista estiver vazia, uma mensagem é mostrada ao usuário
+        if (self.head == None):
+            print("\nNada a remover. A Lista de espera está vazia!")
+            return
+        else: # Transforma o elemento sucessor do head no novo head
+            aux = self.head
+            self.head = self.head.proximo
+            # Depois, faz o ponteiro do antigo head apontar para None
+            aux.proximo = None
+        print("\nChamando Paciente com cartão: {}, número {}".format(aux.cor, aux.numero))
+
+# Programa Main
+print("Bem-vindo(a) ao Sistema de Trigem do Hospital Ítalo Bastos!")
+# Instanciando a classe de lista encadeada
+listaEspera = ListaEncadeadaEspera()
+
+while True: # loop infinito para apresentar as opções
+    opcaoMain = input("\nO que deseja fazer?"+
+                      "\n1 - Adicionar paciente à Fila"+
+                      "\n2 - Mostrar pacientes na Fila"+
+                      "\n3 - Chamar paciente"+
+                      "\n4 - Sair"+
+                      "\n>> ") # Interface para o usuário
+    if (opcaoMain == "1"):
+        listaEspera.inserir()
+        continue
+    elif (opcaoMain == "2"):
+        listaEspera.imprimirListaEspera()
+        continue
+    elif (opcaoMain == "3"):
+        listaEspera.atenderPaciente()
+        continue
+    elif (opcaoMain == "4"):
+        print("\nPrograma encerrado.")
+        break
+    else:
+        print("\nEssa opção não existe. Por favor, atente-se às opções!")
+        continue
